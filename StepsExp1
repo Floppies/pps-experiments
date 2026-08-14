@@ -1,0 +1,58 @@
+1- Para ver que funcione
+ghc -O0 SumList.hs -o sumlist
+./sumlist
+
+2- Compilando el core sin optimizaciones
+ghc \
+  -O0 \
+  -fforce-recomp \
+  -ddump-simpl \
+  -ddump-to-file \
+  -dsuppress-uniques \
+  -dsuppress-module-prefixes \
+  SumList.hs
+
+  -dsuppress-uniques
+-dsuppress-module-prefixes
+son para hacer el dump mas legible
+
+3- Compilando el stg sin optimizaciones
+ghc \
+  -O0 \
+  -fforce-recomp \
+  -ddump-stg-final \
+  -ddump-to-file \
+  -dsuppress-uniques \
+  -dsuppress-module-prefixes \
+  SumList.hs
+
+4- Compilacion 02
+ghc \
+  -O2 \
+  -fforce-recomp \
+  -ddump-simpl \
+  -ddump-to-file \
+  -dsuppress-uniques \
+  -dsuppress-module-prefixes \
+  SumList.hs
+
+mv SumList.dump-simpl O2/core.txt
+
+ghc \
+  -O2 \
+  -fforce-recomp \
+  -ddump-stg-final \
+  -ddump-to-file \
+  -dsuppress-uniques \
+  -dsuppress-module-prefixes \
+  SumList.hs
+
+mv SumList.dump-stg-final O2/stg.txt
+
+5- Comparamos los resultados de ambas optimizaciones
+diff -u O0/core.txt O2/core.txt | less
+diff -u O0/stg.txt O2/stg.txt | less
+
+6- Optenemos stats 
+ghc -O0 -fforce-recomp -ddump-core-stats SumList.hs 2> O0/core-stats.txt
+ghc -O2 -fforce-recomp -ddump-core-stats SumList.hs 2> O2/core-stats.txt
