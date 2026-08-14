@@ -1,0 +1,78 @@
+
+==================== Final STG: ====================
+2026-08-14 14:17:49.972286744 UTC
+
+$trModule3_r177 :: GHC.Prim.Addr#
+[GblId, Unf=OtherCon []] =
+    "Main"#;
+
+$trModule1_r175 :: GHC.Prim.Addr#
+[GblId, Unf=OtherCon []] =
+    "main"#;
+
+$trModule2_r176 :: GHC.Types.TrName
+[GblId, Unf=OtherCon []] =
+    GHC.Types.TrNameS! [$trModule1_r175];
+
+$trModule4_r178 :: GHC.Types.TrName
+[GblId, Unf=OtherCon []] =
+    GHC.Types.TrNameS! [$trModule3_r177];
+
+Main.$trModule :: GHC.Types.Module
+[GblId, Unf=OtherCon []] =
+    GHC.Types.Module! [$trModule2_r176 $trModule4_r178];
+
+Rec {
+factorial_rh3 :: GHC.Num.Integer.Integer -> GHC.Num.Integer.Integer
+[GblId, Arity=1, Unf=OtherCon []] =
+    {} \r [ds_s179]
+        let {
+          sat_s17a [Occ=Once1] :: GHC.Num.Integer.Integer
+          [LclId] =
+              GHC.Num.Integer.IS! [0#];
+        } in 
+          case
+              GHC.Classes.== GHC.Num.Integer.$fEqInteger ds_s179 sat_s17a
+          of
+          { GHC.Types.False ->
+                let {
+                  sat_s17e [Occ=Once1] :: GHC.Num.Integer.Integer
+                  [LclId] =
+                      {ds_s179} \u []
+                          let {
+                            sat_s17d [Occ=Once1] :: GHC.Num.Integer.Integer
+                            [LclId] =
+                                {ds_s179} \u []
+                                    let {
+                                      sat_s17c [Occ=Once1] :: GHC.Num.Integer.Integer
+                                      [LclId] =
+                                          GHC.Num.Integer.IS! [1#];
+                                    } in 
+                                      GHC.Internal.Num.-
+                                          GHC.Internal.Num.$fNumInteger ds_s179 sat_s17c;
+                          } in  factorial_rh3 sat_s17d;
+                } in 
+                  GHC.Internal.Num.* GHC.Internal.Num.$fNumInteger ds_s179 sat_s17e;
+            GHC.Types.True -> GHC.Num.Integer.IS [1#];
+          };
+end Rec }
+
+sat_s17g :: GHC.Num.Integer.Integer
+[LclId] =
+    {} \u []
+        let {
+          sat_s17f [Occ=Once1] :: GHC.Num.Integer.Integer
+          [LclId] =
+              GHC.Num.Integer.IS! [10#];
+        } in  factorial_rh3 sat_s17f;
+
+Main.main :: GHC.Types.IO ()
+[GblId] =
+    {} \u []
+        GHC.Internal.System.IO.print
+            GHC.Internal.Show.$fShowInteger sat_s17g;
+
+:Main.main :: GHC.Types.IO ()
+[GblId] =
+    {} \u [] GHC.Internal.TopHandler.runMainIO Main.main;
+

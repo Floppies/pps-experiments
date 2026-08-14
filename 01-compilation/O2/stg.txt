@@ -1,0 +1,140 @@
+
+==================== Final STG: ====================
+2026-08-14 15:13:34.039962026 UTC
+
+$trModule2 :: Addr#
+[GblId, Unf=OtherCon []] =
+    "Main"#;
+
+$trModule4 :: Addr#
+[GblId, Unf=OtherCon []] =
+    "main"#;
+
+$trModule3 :: TrName
+[GblId, Unf=OtherCon []] =
+    TrNameS! [$trModule4];
+
+$trModule1 :: TrName
+[GblId, Unf=OtherCon []] =
+    TrNameS! [$trModule2];
+
+$trModule :: Module
+[GblId, Unf=OtherCon []] =
+    Module! [$trModule3 $trModule1];
+
+Rec {
+$wsumList [InlPrag=[2], Occ=LoopBreaker] :: [Int] -> Int#
+[GblId[StrictWorker([!])], Arity=1, Str=<1L>, Unf=OtherCon []] =
+    {} \r [ds]
+        case ds<TagProper> of wild {
+          [] -> 0#;
+          : x [Occ=Once1!] xs [Occ=Once1] ->
+              case x of wild1 {
+              I# x1 [Occ=Once1] ->
+              case
+                  case xs of xs [Occ=Once1] { __DEFAULT -> $wsumList xs; }
+              of
+              ww
+              {
+              __DEFAULT -> +# [x1 ww];
+              };
+              };
+        };
+end Rec }
+
+sumList [InlPrag=[2]] :: [Int] -> Int
+[GblId, Arity=1, Str=<1L>, Cpr=1, Unf=OtherCon []] =
+    {} \r [ds]
+        case
+            case ds of ds [Occ=Once1] { __DEFAULT -> $wsumList ds; }
+        of
+        ww
+        {
+        __DEFAULT -> I# [ww];
+        };
+
+Rec {
+main_go3 [Occ=LoopBreaker] :: Int# -> [Int]
+[GblId, Arity=1, Str=<L>, Unf=OtherCon []] =
+    {} \r [x]
+        let {
+          sat [Occ=Once1] :: [Int]
+          [LclId] =
+              {x} \u []
+                  case x<TagProper> of wild {
+                    __DEFAULT ->
+                        case +# [wild 1#] of sat { __DEFAULT -> main_go3 sat; };
+                    10# -> [] [];
+                  }; } in
+        let {
+          sat [Occ=Once1] :: Int
+          [LclId] =
+              I#! [x];
+        } in  : [sat sat];
+end Rec }
+
+main4 :: [Char]
+[GblId] =
+    {} \u []
+        case quotRemInt# [-9223372036854775808# 10#] of wild1 {
+        (#,#) q [Occ=Once1] r [Occ=Once1] ->
+        let {
+          sat [Occ=Once1] :: String
+          [LclId] =
+              {r} \u []
+                  case negateInt# [r] of sat {
+                  __DEFAULT -> $fShowCallStack_itos' sat [];
+                  };
+        } in 
+          case negateInt# [q] of sat {
+          __DEFAULT -> $fShowCallStack_itos' sat sat;
+          };
+        };
+
+main3 :: [Char]
+[GblId, Unf=OtherCon []] =
+    :! [$fShowCallStack10 main4];
+
+main5 :: [Int]
+[GblId] =
+    {} \u [] main_go3 1#;
+
+main2 :: String
+[GblId] =
+    {} \u []
+        case case main5 of main5 { __DEFAULT -> $wsumList main5; } of ww {
+        __DEFAULT ->
+        case <# [ww 0#] of lwild {
+          __DEFAULT -> $fShowCallStack_itos' ww [];
+          1# ->
+              case ww<TagProper> of wild {
+                __DEFAULT ->
+                    let {
+                      sat [Occ=Once1] :: String
+                      [LclId] =
+                          {wild} \u []
+                              case negateInt# [wild] of sat {
+                              __DEFAULT -> $fShowCallStack_itos' sat [];
+                              };
+                    } in  : [$fShowCallStack10 sat];
+                -9223372036854775808# -> main3<TagProper>;
+              };
+        };
+        };
+
+main1 :: State# RealWorld -> (# State# RealWorld, () #)
+[GblId, Arity=1, Str=<L>, Unf=OtherCon []] =
+    {} \r [void] hPutStr2 stdout main2 True void#;
+
+main :: IO ()
+[GblId, Arity=1, Str=<L>, Unf=OtherCon []] =
+    {} \r [void] main1 void#;
+
+main6 :: State# RealWorld -> (# State# RealWorld, () #)
+[GblId, Arity=1, Str=<L>, Unf=OtherCon []] =
+    {} \r [void] runMainIO1 main1 void#;
+
+main :: IO ()
+[GblId, Arity=1, Str=<L>, Unf=OtherCon []] =
+    {} \r [void] main6 void#;
+

@@ -1,0 +1,7 @@
+[1 of 2] Compiling Main             ( SumList.hs, SumList.o )
+
+==================== Core Stats ====================
+Tidy size (terms,types,coercions) Main: 112 76 9
+
+
+[2 of 2] Linking SumList [Objects changed]

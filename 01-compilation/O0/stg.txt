@@ -1,0 +1,65 @@
+
+==================== Final STG: ====================
+2026-08-14 15:04:41.378653258 UTC
+
+$trModule3 :: Addr#
+[GblId, Unf=OtherCon []] =
+    "Main"#;
+
+$trModule1 :: Addr#
+[GblId, Unf=OtherCon []] =
+    "main"#;
+
+$trModule2 :: TrName
+[GblId, Unf=OtherCon []] =
+    TrNameS! [$trModule1];
+
+$trModule4 :: TrName
+[GblId, Unf=OtherCon []] =
+    TrNameS! [$trModule3];
+
+$trModule :: Module
+[GblId, Unf=OtherCon []] =
+    Module! [$trModule2 $trModule4];
+
+Rec {
+sumList [Occ=LoopBreaker] :: [Int] -> Int
+[GblId, Arity=1, Unf=OtherCon []] =
+    {} \r [ds]
+        case ds of {
+          [] -> I# [0#];
+          : x [Occ=Once1] xs [Occ=Once1] ->
+              let {
+                sat [Occ=Once1] :: Int
+                [LclId] =
+                    {xs} \u [] sumList xs;
+              } in  + $fNumInt x sat;
+        };
+end Rec }
+
+sat :: Int
+[LclId] =
+    {} \u []
+        let {
+          sat [Occ=Once1] :: [Int]
+          [LclId] =
+              {} \u []
+                  let {
+                    sat [Occ=Once1] :: Int
+                    [LclId] =
+                        I#! [10#]; } in
+                  let {
+                    sat [Occ=Once1] :: Int
+                    [LclId] =
+                        I#! [1#];
+                  } in  enumFromTo $fEnumInt sat sat;
+        } in  sumList sat;
+
+main :: IO ()
+[GblId] =
+    {} \u [] print $fShowInt sat;
+
+main :: IO ()
+[GblId] =
+    {} \u [] runMainIO main;
+

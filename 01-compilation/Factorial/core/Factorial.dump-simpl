@@ -1,0 +1,72 @@
+
+==================== Tidy Core ====================
+2026-08-14 14:08:14.494251522 UTC
+
+Result size of Tidy Core
+  = {terms: 44, types: 18, coercions: 0, joins: 0/0}
+
+-- RHS size: {terms: 1, types: 0, coercions: 0, joins: 0/0}
+$trModule1_r175 :: GHC.Prim.Addr#
+[GblId, Unf=OtherCon []]
+$trModule1_r175 = "main"#
+
+-- RHS size: {terms: 2, types: 0, coercions: 0, joins: 0/0}
+$trModule2_r176 :: GHC.Types.TrName
+[GblId, Unf=OtherCon []]
+$trModule2_r176 = GHC.Types.TrNameS $trModule1_r175
+
+-- RHS size: {terms: 1, types: 0, coercions: 0, joins: 0/0}
+$trModule3_r177 :: GHC.Prim.Addr#
+[GblId, Unf=OtherCon []]
+$trModule3_r177 = "Main"#
+
+-- RHS size: {terms: 2, types: 0, coercions: 0, joins: 0/0}
+$trModule4_r178 :: GHC.Types.TrName
+[GblId, Unf=OtherCon []]
+$trModule4_r178 = GHC.Types.TrNameS $trModule3_r177
+
+-- RHS size: {terms: 3, types: 0, coercions: 0, joins: 0/0}
+Main.$trModule :: GHC.Types.Module
+[GblId, Unf=OtherCon []]
+Main.$trModule = GHC.Types.Module $trModule2_r176 $trModule4_r178
+
+Rec {
+-- RHS size: {terms: 20, types: 5, coercions: 0, joins: 0/0}
+factorial_rh3 :: Integer -> Integer
+[GblId, Arity=1, Unf=OtherCon []]
+factorial_rh3
+  = \ (ds_d16W :: Integer) ->
+      case ==
+             @Integer
+             GHC.Num.Integer.$fEqInteger
+             ds_d16W
+             (GHC.Num.Integer.IS 0#)
+      of {
+        False ->
+          * @Integer
+            GHC.Internal.Num.$fNumInteger
+            ds_d16W
+            (factorial_rh3
+               (- @Integer
+                  GHC.Internal.Num.$fNumInteger
+                  ds_d16W
+                  (GHC.Num.Integer.IS 1#)));
+        True -> GHC.Num.Integer.IS 1#
+      }
+end Rec }
+
+-- RHS size: {terms: 5, types: 1, coercions: 0, joins: 0/0}
+main :: IO ()
+[GblId]
+main
+  = print
+      @Integer
+      GHC.Internal.Show.$fShowInteger
+      (factorial_rh3 (GHC.Num.Integer.IS 10#))
+
+-- RHS size: {terms: 2, types: 1, coercions: 0, joins: 0/0}
+:Main.main :: IO ()
+[GblId]
+:Main.main = GHC.Internal.TopHandler.runMainIO @() main
+
+
