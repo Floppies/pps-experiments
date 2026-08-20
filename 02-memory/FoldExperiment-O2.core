@@ -1,0 +1,165 @@
+[1 of 2] Compiling Main             ( FoldExperiment.hs, FoldExperiment.o )
+
+==================== Tidy Core ====================
+Result size of Tidy Core
+  = {terms: 272, types: 195, coercions: 43, joins: 4/4}
+
+$trModule4 = "main"#
+
+$trModule3 = TrNameS $trModule4
+
+$trModule2 = "Main"#
+
+$trModule1 = TrNameS $trModule2
+
+$trModule = Module $trModule3 $trModule1
+
+sumStrict1 = I# 0#
+
+sumStrict
+  = \ n_aLB ->
+      case n_aLB of { I# y_a1FY ->
+      case ># 1# y_a1FY of {
+        __DEFAULT ->
+          joinrec {
+            $wgo3_s2Uh x_s2Ub ww_s2Ue
+              = case ==# x_s2Ub y_a1FY of {
+                  __DEFAULT -> jump $wgo3_s2Uh (+# x_s2Ub 1#) (+# ww_s2Ue x_s2Ub);
+                  1# -> I# (+# ww_s2Ue x_s2Ub)
+                }; } in
+          jump $wgo3_s2Uh 1# 0#;
+        1# -> sumStrict1
+      }
+      }
+
+sumLazy = sumStrict
+
+lvl_r2VE = "Uso: ./fold-exp lazy|strict N"#
+
+lvl1_r2VF = unpackCString# lvl_r2VE
+
+$wfail_r2VG = \ eta_s2UG -> hPutStr2 stdout lvl1_r2VF True eta_s2UG
+
+exit_r2VH = \ x_s2UN ww_s2UQ -> itos (+# ww_s2UQ x_s2UN) []
+
+lvl2_r2VI = "strict"#
+
+lvl3_r2VJ = unpackCString# lvl2_r2VI
+
+lvl4_r2VK = "lazy"#
+
+lvl5_r2VL = unpackCString# lvl4_r2VK
+
+main1
+  = \ s_a1Go ->
+      case $wallocaBytesAligned
+             4# 4# (getArgs2 `cast` <Co:8> :: ...) s_a1Go
+      of
+      { (# ipv_a1Gq, ipv1_a1Gr #) ->
+      case ipv1_a1Gr of {
+        [] -> $wfail_r2VG ipv_a1Gq;
+        : ds_d1oy ds2_d1oz ->
+          join {
+            fail_s2Fd _
+              = case eqString ds_d1oy lvl3_r2VJ of {
+                  False -> $wfail_r2VG ipv_a1Gq;
+                  True ->
+                    case ds2_d1oz of {
+                      [] -> $wfail_r2VG ipv_a1Gq;
+                      : n_a16W ds4_d1oB ->
+                        case ds4_d1oB of {
+                          [] ->
+                            hPutStr2
+                              stdout
+                              (case $w$sreadNumber2
+                                      ($fReadInt2 `cast` <Co:13> :: ...) minPrec readEither7
+                               of
+                               { (# ww_a2ia #) ->
+                               case readEither8 (run (Look ww_a2ia) n_a16W) of {
+                                 [] -> case errorWithoutStackTrace readEither5 of {};
+                                 : x_a2fs ds5_a2ft ->
+                                   case ds5_a2ft of {
+                                     [] ->
+                                       case x_a2fs of { I# y_a1FY ->
+                                       case ># 1# y_a1FY of {
+                                         __DEFAULT ->
+                                           joinrec {
+                                             $wgo3_s2UT x1_s2UN ww1_s2UQ
+                                               = case ==# x1_s2UN y_a1FY of {
+                                                   __DEFAULT ->
+                                                     jump $wgo3_s2UT
+                                                       (+# x1_s2UN 1#) (+# ww1_s2UQ x1_s2UN);
+                                                   1# -> exit_r2VH x1_s2UN ww1_s2UQ
+                                                 }; } in
+                                           jump $wgo3_s2UT 1# 0#;
+                                         1# -> itos 0# []
+                                       }
+                                       };
+                                     : ipv2_a2fz ipv3_a2fA ->
+                                       case errorWithoutStackTrace readEither2 of {}
+                                   }
+                               }
+                               })
+                              True
+                              ipv_a1Gq;
+                          : ipv2_s2al ipv3_s2jD -> $wfail_r2VG ipv_a1Gq
+                        }
+                    }
+                } } in
+          case eqString ds_d1oy lvl5_r2VL of {
+            False -> jump fail_s2Fd (##);
+            True ->
+              case ds2_d1oz of {
+                [] -> jump fail_s2Fd (##);
+                : n_aMw ds3_d1oA ->
+                  case ds3_d1oA of {
+                    [] ->
+                      hPutStr2
+                        stdout
+                        (case $w$sreadNumber2
+                                ($fReadInt2 `cast` <Co:13> :: ...) minPrec readEither7
+                         of
+                         { (# ww_a2ia #) ->
+                         case readEither8 (run (Look ww_a2ia) n_aMw) of {
+                           [] -> case errorWithoutStackTrace readEither5 of {};
+                           : x_a2fs ds4_a2ft ->
+                             case ds4_a2ft of {
+                               [] ->
+                                 case x_a2fs of { I# y_a1FY ->
+                                 case ># 1# y_a1FY of {
+                                   __DEFAULT ->
+                                     joinrec {
+                                       $wgo3_s2V7 x1_s2V1 ww1_s2V4
+                                         = case ==# x1_s2V1 y_a1FY of {
+                                             __DEFAULT ->
+                                               jump $wgo3_s2V7
+                                                 (+# x1_s2V1 1#) (+# ww1_s2V4 x1_s2V1);
+                                             1# -> exit_r2VH x1_s2V1 ww1_s2V4
+                                           }; } in
+                                     jump $wgo3_s2V7 1# 0#;
+                                   1# -> itos 0# []
+                                 }
+                                 };
+                               : ipv2_a2fz ipv3_a2fA ->
+                                 case errorWithoutStackTrace readEither2 of {}
+                             }
+                         }
+                         })
+                        True
+                        ipv_a1Gq;
+                    : ipv2_s2jG ipv3_s2jH -> jump fail_s2Fd (##)
+                  }
+              }
+          }
+      }
+      }
+
+main = main1 `cast` <Co:3> :: ...
+
+main2 = runMainIO1 (main1 `cast` <Co:3> :: ...)
+
+main = main2 `cast` <Co:3> :: ...
+
+
+
+[2 of 2] Linking fold-exp-O2 [Objects changed]

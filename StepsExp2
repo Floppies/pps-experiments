@@ -5,6 +5,22 @@ to use
 ./fold-exp lazy 1000000 +RTS -s -RTS
 ./fold-exp strict 1000000 +RTS -s -RTS
 
-2- Midiendo uso del heap
-./fold-exp lazy 5000000 +RTS -hT -l
+2- Midiendo uso del heap y obteniendo graficos
 ghc -O0 -prof -fprof-late -rtsopts -eventlog FoldExperiment.hs -o fold-exp
+./fold-exp lazy 1000000 +RTS -hT -i0.001 -polazy -RTS
+./fold-exp lazy 1000000 +RTS -hT -i0.001 -polazy -RTS
+
+3- Mediciones con O2
+ghc -O2 -rtsopts -fforce-recomp FoldExperiment.hs -o fold-exp-O2
+
+./fold-exp-O2 lazy 1000000 +RTS -s -RTS
+./fold-exp-O2 strict 1000000 +RTS -s -RTS
+
+3- Obtener el Core para mejorar el analisis
+ghc -O2 \
+    -fforce-recomp \
+    -ddump-simpl \
+    -dsuppress-all \
+    FoldExperiment.hs \
+    -o fold-exp-O2 \
+    > FoldExperiment-O2.core
