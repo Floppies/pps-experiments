@@ -30,7 +30,121 @@ Despues de analizar stg O0 observamos lo siguiente:
 
 STG hace explícita la representación operacional de la evaluación lazy: expresiones no evaluadas pueden transformarse en closures que almacenan tanto el código a ejecutar como las variables libres necesarias para ejecutarlo posteriormente.
 
+## Comparacion entre O0 y O2
 
+O0
+──────────────────────────────────────────
+
+: x xs ->
+    let {
+        sat =
+            {xs} \u [] sumList xs;
+    }
+    in + $fNumInt x sat
+
+    O2
+──────────────────────────────────────────
+
+: x xs ->
+    case x of {
+        I# x1 ->
+
+            evaluar $wsumList xs
+                    ↓
+                   ww
+
+            +# x1 ww
+    }
+
+                        -O0                   -O2
+
+recursión        thunk                  directa/demandada
+
+resultado        Int                    Int#
+
+suma             +                      +#
+
+Num Int          $fNumInt               eliminado
+
+boxing           intermedio             reducido
+
+worker           no                     $wsumList
+
+thunk recursivo  sí                     no
+
+Para la lista
+                        -O0             -O2
+
+[1..10] genérico       enumFromTo      main_go3
+
+Enum Int               $fEnumInt       eliminado
+
+cola lazy              thunk           thunk
+
+nodo de lista          (:)             (:)
+
+elemento                Int             Int
+
+abstracción de typeclasses
+        ↓
+puede desaparecer
+
+estructura de datos [Int]
+        ↓
+sigue existiendo
+
+Podemos dividir las allocations potenciales en dos grupos.
+
+Allocations que -O2 parece haber eliminado/reducido:
+
+- thunk de sumList xs en cada paso recursivo;
+- boxes asociados a resultados numéricos recursivos;
+- infraestructura asociada a las llamadas genéricas a Num Int;
+- algunas abstracciones de Enum y Show.
+
+Allocations que siguen existiendo:
+
+- nodos (:) de la lista;
+- Int boxed almacenados como elementos de [Int];
+- thunk que produce la cola de la lista;
+- otros thunks relacionados con main, generación del String, etc.
+
+Eso nos lleva a una idea bastante importante:
+
+optimizacion **distinto** cero allocations
+
+sino:
+
+optimizacion → eliminacion de algunas allocations evitables
+
+# Conclusiones generales
+
+                 HASKELL
+                    │
+                    ▼
+                  CORE
+                    │
+       ┌────────────┴────────────┐
+       │                         │
+      O0                        O2
+       │                         │
+typeclasses              worker/wrapper
+boxed Int                Int#
+generic +                +#
+       │                         │
+       ▼                         ▼
+                  STG
+       │                         │
+thunk sumList xs      evaluación directa
+closures              menos closures
+       │                         │
+       └────────────┬────────────┘
+                    │
+                    ▼
+       diferente presión potencial
+              sobre el heap
+
+La evaluación lazy no implica que todas las expresiones terminen necesariamente convertidas en thunks en el código optimizado. En -O0, la llamada recursiva sumList xs aparece explícitamente como una closure actualizable. Con -O2, el análisis de demanda y worker/wrapper permiten ejecutar la recursión mediante $wsumList :: [Int] -> Int#, eliminando ese thunk y realizando la suma mediante la operación primitiva +#. Sin embargo, la lista de entrada continúa siendo producida de forma lazy y su cola sigue representándose mediante un thunk. Por lo tanto, GHC elimina computaciones suspendidas que puede evitar, pero conserva las necesarias para mantener la semántica/productividad lazy del programa.
 
 
 
