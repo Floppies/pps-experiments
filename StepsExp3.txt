@@ -1,0 +1,8 @@
+1. Generando los LLVM
+Para C:
+clang -O0 -S -emit-llvm sum.c -o sum_c_O0.ll
+clang -O2 -S -emit-llvm sum.c -o sum_c_O2.ll
+Para Haskell:
+ghc -O0 -keep-llvm-files Sum.hs -o sum_hs_O0
+ghc -O2 -keep-llvm-files Sum.hs -o sum_hs_O2
+
