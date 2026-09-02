@@ -2,7 +2,12 @@ OS: Linux 7.1.4-arch1-1
 CPU: 11th Gen Intel(R) Core(TM) i7-1165G7 (8) @ 4.70GHz
 RAM: 16GB
 
-GHC: 9.10.3
-LLVM: 21.1.8
-Clang: 21.1.8
+LLVM del sistema: 21.1.8
+Clang del sistema: 21.1.8
+
+LLVM utilizado en los experimentos: 15.0.6
+Clang utilizado en los experimentos: 15.0.6
+
 Cabal: 3.16.1.0
+
+Nota: debido a que GHC 9.10.3 advierte que la versión LLVM 21.1.8 instalada en el sistema no se encuentra dentro del rango soportado por su backend LLVM, para los experimentos que requieren generación de LLVM IR se utiliza LLVM/Clang 15.0.6 de forma local. La instalación del sistema se mantiene sin modificaciones.
